@@ -63,18 +63,7 @@ def create_accounts(contacts_to_import, current_user, list_info):
 
             account = Account(account_id=account_data['id'],
                               account_name=account_data['username'])
-            account.full_name = account_data['full_name']
-            account.biography = account_data['biography']
-            account.profile_pic_url = account_data[
-                'profile_pic_url']
-            account.profile_pic_url_hd = account_data[
-                'profile_pic_url_hd']
-            account.external_url = account_data['external_url']
-            account.external_url_linkshimmed = account_data[
-                'external_url_linkshimmed']
-            account.followed_by = account_data['edge_followed_by'][
-                'count']
-            account.follow = account_data['edge_follow']['count']
+            account = update_user(account, account_data)
             account.last_updated = 0
             account.is_private = account_data['is_private']
             db.session.add(account)
@@ -146,12 +135,30 @@ def get_media_sidecar(media_shortcode):
                 return None
 
 
+def update_user(account, account_data):
+    account.full_name = account_data['full_name']
+    account.biography = account_data['biography']
+    account.profile_pic_url = account_data[
+        'profile_pic_url']
+    account.profile_pic_url_hd = account_data[
+        'profile_pic_url_hd']
+    account.external_url = account_data['external_url']
+    account.external_url_linkshimmed = account_data[
+        'external_url_linkshimmed']
+    account.followed_by = account_data['edge_followed_by'][
+        'count']
+    account.follow = account_data['edge_follow']['count']
+    return account
+
+
 def add_media(account, account_data):
     latest_timestamp = \
         account_data['edge_owner_to_timeline_media']['edges'][0]['node'][
             'taken_at_timestamp']
 
     media_count = 0
+
+    account = update_user(account, account_data)
 
     for media in account_data['edge_owner_to_timeline_media']['edges']:
         node = media['node']
