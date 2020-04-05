@@ -115,3 +115,10 @@ nav.pagination {
 .play-button:hover {
     background-color: rgba(0, 33, 66, 0.9);
 }
+
+.is-cover img {
+    max-height: 200px;
+    max-width: 200px;
+    object-fit: cover;
+
+}

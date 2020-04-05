@@ -4,7 +4,7 @@
 
         <div class="card-image">
           <a href="{{ url_for('media.media', media_shortcode = post.shortcode) }}">
-            <figure class="image">
+            <figure class="image is-cover">
               <img src="{{ post.thumbnails|thumbnail_320 }}" alt="A photo by {{ author.full_name }}">
             </figure>
           </a>
