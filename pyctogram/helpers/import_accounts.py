@@ -183,22 +183,24 @@ def add_media(account, account_data):
                 sidecar = json.dumps(get_media_sidecar(
                     media_shortcode=node['shortcode']))
 
-            new_media = Media()
-            new_media.id = node['id']
-            new_media.owner = node['owner']['id']
-            new_media.media_type = node['__typename']
-            new_media.is_video = node['is_video']
-            new_media.display_url = node['display_url']
-            new_media.caption = caption
-            new_media.shortcode = node['shortcode']
-            new_media.timestamp = node['taken_at_timestamp']
-            new_media.likes = node['edge_liked_by']['count']
-            new_media.comments = node['edge_media_to_comment']['count']
-            new_media.thumbnails = thumbnails  # JSON object containing thumbnails  # noqa
-            new_media.sidecar = sidecar  # JSON object containing the whole edge_sidecar_to_children.edges  # noqa
+            media = Media.query.filter_by(id=node['id']).first()
+            if not media:
+                media = Media()
+                media.id = node['id']
+                media.owner = node['owner']['id']
+                db.session.add(media)
+            media.media_type = node['__typename']
+            media.is_video = node['is_video']
+            media.display_url = node['display_url']
+            media.caption = caption
+            media.shortcode = node['shortcode']
+            media.timestamp = node['taken_at_timestamp']
+            media.likes = node['edge_liked_by']['count']
+            media.comments = node['edge_media_to_comment']['count']
+            media.thumbnails = thumbnails  # JSON object containing thumbnails  # noqa
+            media.sidecar = sidecar  # JSON object containing the whole edge_sidecar_to_children.edges  # noqa
 
             try:
-                db.session.add(new_media)
                 db.session.commit()
                 media_count += 1
             except Exception as e:
