@@ -166,7 +166,7 @@ def add_media(account, account_data):
         # check if media has been uploaded after the latest upload from
         # this account
         if (node['taken_at_timestamp'] > account.last_updated and node[
-                '__typename'] != 'GraphVideo'):
+                '__typename'] in ['GraphImage', 'GraphVideo', 'GraphSidecar']):
 
             # get caption
             caption = ''

@@ -83,3 +83,35 @@ nav.pagination {
 
 .user-list-grid li .user-info { min-height: 9rem; }
 .user-list-grid li .user-actions { margin-bottom: 3rem; }
+
+.play-button {
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 50px);
+    width: 100px;
+    height: 100px;
+    display: block;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0 auto;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: background-color 0.5s ease;
+}
+
+.play-button:after {
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 14px);
+    display: block;
+    content: '';
+    box-sizing: border-box;
+    border-color: transparent transparent transparent #fff;
+    border-style: solid;
+    border-width: 26px 0 26px 40px;
+}
+
+.play-button:hover {
+    background-color: rgba(0, 33, 66, 0.9);
+}

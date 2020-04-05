@@ -29,10 +29,13 @@
       </header>
 
       <div class="card-image">
-        {% if post.media_type == 'GraphImage' %}
+        {% if post.media_type in ['GraphImage', 'GraphVideo'] %}
         <figure class="image is-square">
           <img src="{{ post.display_url }}" alt="A photo by {{ post.account.full_name }}">
         </figure>
+        {% if post.is_video %}
+          <a href="https://instagram.com/p/{{ post.shortcode }}" target="_blank" noopener class="play-button"></a>
+        {% endif %}
         {% elif post.media_type == 'GraphSidecar' %}
           <div class="sidecar slider" data-slider>
             <div class="slides">
